@@ -1,0 +1,236 @@
+.main-departments {
+  width: 100vw;
+  min-height: 100vh; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10vh; 
+  gap: 1.5rem;
+  overflow: hidden;
+}
+
+.department-heading {
+  width: 70%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 10vh; 
+  padding: 1rem;
+  z-index: 10;
+}
+
+.plus-icon{
+    width: 6rem;
+    height: 2.5rem;
+    border: 2px solid #1E3A8A;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #1E3A8A;
+    color: #E5E7EB;
+}
+
+.plus-icon:hover {
+  background-color: #3146B3; 
+  border-color: #3146B3;
+  transition: 0.2s ease;
+}
+
+.plus-icon h2{
+  font-weight: 400;
+  font-size: 1.2rem;
+}
+
+.popup-overlay {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; 
+}
+
+.add-popup{
+    width: 40vw;
+    height: 40vh;
+    background-color: #E5E7EB;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+    z-index: 10000;
+}
+
+.close-div{
+    width: 2vw;
+    height: 2vw;
+    margin-left: auto;
+    margin-right: 2vw;
+}
+
+.close-div button{
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.add-div{
+    width: 50%;
+    height: 8vh;
+    border: 2px solid black;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.add-div input{
+    width: 90%;
+    height: 100%;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 0.8rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.add-btn{
+    width: 20%;
+    height: 15%;
+    margin: auto;
+    background-color: #1E3A8A;
+    color: #E5E7EB;
+    border: transparent;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: "Poppins", sans-serif;
+}
+
+.add-btn:hover{
+    background-color: #3146B3;
+    transition: 0.2s ease;
+}
+
+.department-list {
+  width: 70%;
+  flex: 1; 
+  overflow-y: auto; 
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.department-list ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+::-webkit-scrollbar {display:none;}
+
+.department-listitem{
+  padding: 1vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-btn{
+  width: 3vw;
+  height: 3vw;
+  background-color: #F8D7DA;
+  border: 1px solid #E6A5A5;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.delete-btn:hover{
+  background-color: #F5B7B1;
+  transition: 0.2s ease;
+}
+
+.student-popup{
+  height: 80vh;
+  gap: 1rem;
+}
+
+.std-add-btn{
+  height: 9%;
+  width: 25%;
+}
+
+.student-add{
+  width: 70%;
+}
+
+.department-list {
+  width: 80%;
+  margin: 0 auto;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+
+.department-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  background-color: #1E3A8A;
+  color: white;
+  font-weight: 600;
+  padding: 12px 20px;
+}
+
+.department-listitem {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: white;
+  transition: background-color 0.2s ease;
+}
+
+.department-listitem:hover {
+  background-color: #f1f5f9;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+}
+
+.col-actions {
+  justify-content: center;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.delete-btn:hover {
+  transform: scale(1.1);
+}
