@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  padding: 5vw;
 }
 
 .classroom-parent{
@@ -24,6 +25,7 @@
   width: 100%;
   height: 100%;
   border: 1.5px solid #3146B3;
+  cursor: pointer;
 }
 
 .class-seat:hover{
@@ -118,4 +120,14 @@
     border: 2px solid #1E3A8A;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.std-record{
+  font-size: 0.8rem;
+}
+
+.blocked-seat {
+  background-color: #ffeded; 
+  cursor: not-allowed;
+  border: 2px solid red;
 }

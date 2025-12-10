@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Navbar from "./Navbar";
 import "./seats.css";
 import Swal from "sweetalert2";
 import Classroom from "./Classroom";
+import html2canvas from 'html2canvas'
 
 export default function Seats() {
   const [display, toggleDisplay] = useState(true);
@@ -68,6 +69,22 @@ export default function Seats() {
     toggleMainDisplay(false);
   }
 
+  const planRef = useRef();
+  const savePlan = () => {
+    if (!planRef.current) {
+      console.error('planRef is not attached yet');
+      return;
+    }
+
+    html2canvas(planRef.current).then((canvas) => {
+      const img = canvas.toDataURL('image/png');
+      const link = document.createElement('a');
+      link.download = 'plan.png';
+      link.href = img;
+      link.click();
+    });
+  };
+
   return (
     <div>
       <Navbar /> 
@@ -117,7 +134,12 @@ export default function Seats() {
 
               <button className="change-btn" onClick={changeRoom}>Change Room</button>
             </div>
-            <Classroom room={roomChange} />
+
+            <div ref={planRef}>
+              <Classroom room={roomChange} />
+            </div>
+
+            <button className="save-btn" onClick={savePlan}>Save</button>
           </div>
         )}
 

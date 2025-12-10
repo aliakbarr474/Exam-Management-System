@@ -267,7 +267,7 @@ app.post('/students/cms', (req,res) => {
 })
 
 app.post('/place/add', (req,res) => {
-  const {room,departmentId,stdCMS,selectedSeat} = req.body;
+  const { room, departmentId, stdCMS, selectedSeat } = req.body;
 
   const sql1 = 'SELECT room_id FROM rooms WHERE name = ?';
   db.query(sql1, [room], (err,result) => {
@@ -275,42 +275,114 @@ app.post('/place/add', (req,res) => {
       console.log('Error finding room: ', err);
       return res.status(500).json({message: 'Database error'});
     }
+
     const room_id = result[0].room_id;
-    
+
     const sql2 = 'SELECT student_id FROM students WHERE department_id = ? AND roll_no = ?';
     db.query(sql2, [departmentId,stdCMS], (err2,result2) => {
       if (err2) {
         console.log('Error finding student: ', err2);
         return res.status(500).json({message: 'Database error'});
       }
+
       const student_id = result2[0].student_id;
 
-      const sql3 = 'INSERT INTO allocated_seats (room_id,seat_no,student_id) VALUES (?,?,?)';
-      db.query(sql3, [room_id,selectedSeat,student_id], (err3,result3) => {
-        if (err3) {
-          console.log('Error inserting student: ', err3);
-          return res.status(500).json({message: 'Database error'});
+      const sqlCheck = 'SELECT * FROM allocated_seats WHERE seat_no = ? AND room_id = ?';
+      db.query(sqlCheck, [selectedSeat, room_id], (errCheck, checkResult) => {
+        if (errCheck) {
+          console.log('Error checking seat:', errCheck);
+          return res.status(500).json({ message: 'Database error' });
         }
 
-        res.status(200).json({message: result3.insertId});
-      })
-    })
-  })
-})
+        if (checkResult.length > 0) {
+          return res.status(400).json({ message: "Seat already allocated!" });
+        }
+
+        const sql3 = 'INSERT INTO allocated_seats (room_id, seat_no, student_id) VALUES (?,?,?)';
+        db.query(sql3, [room_id, selectedSeat, student_id], (err3,result3) => {
+          if (err3) {
+            console.log('Error inserting student: ', err3);
+            return res.status(500).json({ message: 'Database error' });
+          }
+
+          return res.status(200).json({ message: "Student placed successfully" });
+        });
+      });
+    });
+  });
+});
+
 
 app.get('/place/show', (req,res) => {
-  const sql = 'SELECT * FROM allocated_seats';
+  const { room } = req.query;
 
-  db.query(sql,(err,result) => {
+  const sql = `
+    SELECT allocated_seats.seat_no,
+           students.student_id,
+           students.full_name,
+           students.roll_no,
+           rooms.name AS room
+    FROM allocated_seats
+    JOIN students ON allocated_seats.student_id = students.student_id
+    JOIN rooms ON allocated_seats.room_id = rooms.room_id
+    WHERE rooms.name = ?
+  `;
+
+  db.query(sql, [room], (err,result) => {
     if (err) {
-      console.log('Error fetching seats: ', err);
       return res.status(500).json({message: 'Database error'});
     }
 
-    console.log(result);
-    return res.status(200).json({message: result});
-  })
-})
+    return res.status(200).json({ message: result });
+  });
+});
 
+app.get('/dashboard/departments', (req,res) => {
+  const sql = 'SELECT COUNT(*) AS count FROM departments';
+
+  db.query(sql,(err,result) => {
+    if (err) {
+      return res.status(500).json({message: 'Database error'});
+    }
+
+    return res.status(200).json({departmentNum: result[0].count});
+  })
+});
+
+app.get('/dashboard/students', (req,res) => {
+  const sql = 'SELECT COUNT(*) AS count FROM students';
+
+  db.query(sql,(err,result) => {
+    if (err) {
+      return res.status(500).json({message: 'Database error'});
+    }
+
+    return res.status(200).json({stdNum: result[0].count});
+  })
+});
+
+app.get('/dashboard/rooms', (req,res) => {
+  const sql = 'SELECT COUNT(*) AS count FROM rooms';
+
+  db.query(sql,(err,result) => {
+    if (err) {
+      return res.status(500).json({message: 'Database error'});
+    }
+
+    return res.status(200).json({roomNum: result[0].count});
+  })
+});
+
+app.get('/dashboard/seats', (req,res) => {
+  const sql = 'SELECT COUNT(*) AS count FROM allocated_seats';
+
+  db.query(sql,(err,result) => {
+    if (err) {
+      return res.status(500).json({message: 'Database error'});
+    }
+
+    return res.status(200).json({seatNum: result[0].count});
+  })
+});
 
 app.listen(5000, () => console.log('server running on port 5000'))

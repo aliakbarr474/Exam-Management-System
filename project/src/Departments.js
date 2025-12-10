@@ -91,7 +91,6 @@ export default function Departments(){
                     <h1>Departments</h1>
 
                     <div className='plus-icon' onClick={showOverlay}>
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="white"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80v-240Z"/></svg> */}
                         <h2>Add</h2>
                     </div>
                 </div>
@@ -121,7 +120,7 @@ export default function Departments(){
                 <div className='department-list'>
                     <ul>
                         <li className='list-header'>
-                            <span className='col'>Department Name</span>
+                            <span className='col'>Department Name</span>    
                             <span className='col-actions'>Options</span>
                         </li>
                       {data.map((item, index) => (
